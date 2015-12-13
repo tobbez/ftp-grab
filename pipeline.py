@@ -7,7 +7,12 @@ import socket
 import shutil
 import time
 import sys
-import urllib
+try:
+    # Python 3
+    from urllib.parse import unquote
+except ImportError:
+    # Python 2
+    from urllib import unquote
 try:
     import requests
 except ImportError:
@@ -205,7 +210,7 @@ class WgetArgs(object):
         for url in item_list.text.splitlines():
             if url.startswith('ftp://'):
                 url = url.replace('&#32;', '%20').replace('&amp;', '&')
-                url = urllib.unquote(url)
+                url = unquote(url)
                 if item_item == 'archiveteam_ftp_items_2015120102':
                     url = url.replace('ftp://ftp.research.microsoft.com/downloads/downloads/', 'ftp://ftp.research.microsoft.com/downloads/')
                 if '#' in url:
